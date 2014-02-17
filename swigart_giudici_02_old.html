@@ -9,7 +9,6 @@
     <script src="http://code.highcharts.com/modules/exporting.js"></script>
 </head>
 <body>
-    <br/>
     <div id="it" class="small-multiple">
     </div>
     <div id="exec" class="small-multiple">
@@ -30,32 +29,60 @@
 <script>
 $(function () {
 
-    var budget = [
-            [0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0]
+    var it_ranges = [
+            [450,463],[450,472],[470,483],[475,488],[475,490],[500,534],[500,557],[500,563],[500,552],[500,542],[500,526]
         ],
-    it_ranges = [
-            [0,2.9],[0,4.9],[0,2.8],[0,2.7],[0,3.2],[0,6.8],[0,11.4],[0,12.6],[0,10.4],[0,8.4],[0,5.2]
+    it_budget = [
+            [450],[450],[470],[475],[475],[500],[500],[500],[500],[500],[500],[500]
         ],
+
     exec_ranges = [
-            [0,-1.6],[0,-0.8],[0,44.2],[0,41.9],[0,42.2],[0,41.1],[0,40.7],[0,35.9],[0,31.3],[0,29.8],[0,29.7]
+            [250,246],[255,253],[260,375],[265,376],[270,384],[275,388],[280,394],[290,394],[300,394],[305,396],[310,402]
         ],
+    exec_budget = [
+            [250],[255],[260],[265],[270],[275],[280],[290],[300],[305],[310],[400]
+        ],
+        
     fac_ranges = [
-           [0,1.6],[0,2.6],[0,3.3],[0,2.4],[0,-2.4],[0,-6.7],[0,5.3],[0,5],[0,4],[0,-3.7],[0,-8.4]
+            [190,193],[190,195],[180,186],[170,174],[170,166],[180,168],[190,200],[200,210],[200,208],[190,183],[190,174]
+        ],
+    fac_budget = [
+            [190],[190],[180],[170],[170],[180],[190],[200],[200],[190],[190],[200]
+        ],
+
+    fin_budget = [
+            [100],[100],[100],[110],[110],[110],[120],[120],[120],[120],[120],[120]
         ],
     fin_ranges = [
-            [0,-4],[0,-5],[0,-5],[0,-10.9],[0,-8.2],[0,-0.9],[0,-8.3],[0,-6.7],[0,-6.7],[0,-5.8],[0,10]
+            [100,96],[100,95],[100,95],[110,98],[110,101],[110,109],[120,110],[120,112],[120,112],[120,113],[120,132]
+        ],
+
+    hr_budget = [
+            [50],[50],[50],[51],[51],[51],[52],[52],[52],[53],[53],[53]
         ],
     hr_ranges = [
-            [0,2],[0,28],[0,16],[0,3.9],[0,-2],[0,-2],[0,-7.7],[0,-9.6],[0,-5.8],[0,-5.7],[0,-5.7]
+            [50,51],[50,64],[50,58],[51,53],[51,50],[51,50],[52,48],[52,47],[52,49],[53,50],[53,50]
+        ],
+
+    mktg_budget = [
+            [100],[100],[100],[100],[100],[100],[100],[100],[100],[100],[150],[150]
         ],
     mktg_ranges = [
-            [0,-1],[0,-3],[0,-5],[0,-3],[0,4],[0,52],[0,-11],[0,-10],[0,-14],[0,-7],[0,-2.7]
+            [100,99],[100,97],[100,95],[100,97],[100,104],[100,152],[100,89],[100,90],[100,86],[100,93],[150,146]
+        ],
+
+    sales_budget = [
+            [510],[475],[475],[505],[480],[480],[510],[485],[485],[515],[490],[490]
         ],
     sales_ranges = [
-            [0,2.7],[0,-3.6],[0,-1.7],[0,-0.4],[0,1.9],[0,0],[0,0.4],[0,-1.2],[0,-0.2],[0,-0.2],[0,0.8]
+            [510,524],[475,458],[475,467],[505,503],[480,489],[480,480],[510,512],[485,479],[485,484],[515,514],[490,494]
+        ],
+
+    ts_budget = [
+            [35],[35],[35],[36],[36],[36],[37],[37],[37],[38],[38],[38]
         ],
     ts_ranges = [
-            [0,-17.1],[0,-20],[0,-20],[0,-25],[0,-27.8],[0,-27.8],[0,-32.4],[0,-32.4],[0,-29.7],[0,-34.2],[0,-31.6]
+            [35,29],[35,28],[35,28],[36,27],[36,26],[36,26],[37,25],[37,25],[37,26],[38,25],[38,26]
         ];
 
 
@@ -67,39 +94,19 @@ $(function () {
             },
         
             xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                labels: {
-                    x: 0,
-                    y: -64,
-                    style: {
-                        color: '#c0c0c0',
-                        fontSize: 10
-                    }
-                },
-                gridLineWidth: 1,
-                tickLength: 0
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
             },
             
             yAxis: {
                 title: {
-                    text: "Budget Spent",
-                    style: {
-                        color: "#6D869F",
-                        fontWeight: 300
-                    }
-                },
-                labels: {
-                    format: '{value} %'
-                },
-                min: -50,
-                max: 50,
-                tickInterval: 25,
-                gridLineColor: "#e0e0e0",
-                gridLineWidth: .5
+                    text: null
+                }
             },
         
             tooltip: {
-                enabled: false
+                crosshairs: true,
+                shared: true,
+                valuePrefix: '$'
             },
             
             legend: {
@@ -114,14 +121,12 @@ $(function () {
         
             series: [{
                 name: 'Budget',
-                data: budget,
+                data: it_budget,
                 zIndex: 1,
                 marker: {
                     fillColor: 'white',
                     lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[0],
-                    radius: 1,
-                    symbol: "diamond"
+                    lineColor: Highcharts.getOptions().colors[0]
                 }
             }, {
                 name: 'Range',
@@ -143,34 +148,19 @@ $(function () {
             },
         
             xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                labels: {
-                    enabled: false
-                },
-                gridLineWidth: 1,
-                tickLength: 0
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
             },
             
             yAxis: {
                 title: {
-                    text: "Budget Spent",
-                    style: {
-                        color: "#6D869F",
-                        fontWeight: 300
-                    }
-                },
-                labels: {
-                    format: '{value} %'
-                },
-                min: -50,
-                max: 50,
-                tickInterval: 25,
-                gridLineColor: "#e0e0e0",
-                gridLineWidth: .5
+                    text: null
+                }
             },
         
             tooltip: {
-                enabled: false
+                crosshairs: true,
+                shared: true,
+                valuePrefix: '$'
             },
             
             legend: {
@@ -185,14 +175,12 @@ $(function () {
         
             series: [{
                 name: 'Budget',
-                data: budget,
+                data: exec_budget,
                 zIndex: 1,
                 marker: {
                     fillColor: 'white',
                     lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[0],
-                    radius: 1,
-                    symbol: "diamond"
+                    lineColor: Highcharts.getOptions().colors[0]
                 }
             }, {
                 name: 'Range',
@@ -215,34 +203,19 @@ $(function () {
             },
         
             xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                labels: {
-                    enabled: false
-                },
-                gridLineWidth: 1,
-                tickLength: 0
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
             },
             
             yAxis: {
                 title: {
-                    text: "Budget Spent",
-                    style: {
-                        color: "#6D869F",
-                        fontWeight: 300
-                    }
-                },
-                labels: {
-                    format: '{value} %'
-                },
-                min: -50,
-                max: 50,
-                tickInterval: 25,
-                gridLineColor: "#e0e0e0",
-                gridLineWidth: .5
+                    text: null
+                }
             },
         
             tooltip: {
-                enabled: false
+                crosshairs: true,
+                shared: true,
+                valuePrefix: '$'
             },
             
             legend: {
@@ -257,14 +230,12 @@ $(function () {
 
             series: [{
                 name: 'Budget',
-                data: budget,
+                data: fac_budget,
                 zIndex: 1,
                 marker: {
                     fillColor: 'white',
                     lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[0],
-                    radius: 1,
-                    symbol: "diamond"
+                    lineColor: Highcharts.getOptions().colors[0]
                 }
             }, {
                 name: 'Range',
@@ -287,326 +258,14 @@ $(function () {
             },
         
             xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                labels: {
-                    enabled: false
-                },
-                gridLineWidth: 1,
-                tickLength: 0
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
             },
             
             yAxis: {
                 title: {
-                    text: "Budget Spent",
-                    style: {
-                        color: "#6D869F",
-                        fontWeight: 300
-                    }
-                },
-                labels: {
-                    format: '{value} %'
-                },
-                min: -50,
-                max: 50,
-                tickInterval: 25,
-                gridLineColor: "#e0e0e0",
-                gridLineWidth: .5
-            },
-        
-            tooltip: {
-                enabled: false
-            },
-            
-            legend: {
-                enabled: false
-            },
-            exporting: {
-                enabled: false
-            },
-            credits: {
-                enabled: false
-            },
-        
-            series: [{
-                name: 'Budget',
-                data: budget,
-                zIndex: 1,
-                marker: {
-                    fillColor: 'white',
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[0],
-                    radius: 1,
-                    symbol: "diamond"
+                    text: null
                 }
-            }, {
-                name: 'Range',
-                data: fin_ranges,
-                type: 'arearange',
-                lineWidth: 0,
-                linkedTo: ':previous',
-                color: Highcharts.getOptions().colors[0],
-                fillOpacity: 0.3,
-                zIndex: 0
-            }]
-        
-        });
-
-
-        $('#hr').highcharts({
-        
-            title: {
-                text: null
             },
-        
-            xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                labels: {
-                    enabled: false
-                },
-                gridLineWidth: 1,
-                tickLength: 0
-            },
-            
-            yAxis: {
-                title: {
-                    text: "Budget Spent",
-                    style: {
-                        color: "#6D869F",
-                        fontWeight: 300
-                    }
-                },
-                labels: {
-                    format: '{value} %'
-                },
-                min: -50,
-                max: 50,
-                tickInterval: 25,
-                gridLineColor: "#e0e0e0",
-                gridLineWidth: .5
-            },
-        
-            tooltip: {
-                enabled: false
-            },
-            
-            legend: {
-                enabled: false
-            },
-            exporting: {
-                enabled: false
-            },
-            credits: {
-                enabled: false
-            },
-        
-            series: [{
-                name: 'Budget',
-                data: budget,
-                zIndex: 1,
-                marker: {
-                    fillColor: 'white',
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[0],
-                    radius: 1,
-                    symbol: "diamond"
-                }
-            }, {
-                name: 'Range',
-                data: hr_ranges,
-                type: 'arearange',
-                lineWidth: 0,
-                linkedTo: ':previous',
-                color: Highcharts.getOptions().colors[0],
-                fillOpacity: 0.3,
-                zIndex: 0
-            }]
-        
-        });
-
-
-        $('#mktg').highcharts({
-        
-            title: {
-                text: null
-            },
-        
-            xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                labels: {
-                    enabled: false
-                },
-                gridLineWidth: 1,
-                tickLength: 0
-            },
-            
-            yAxis: {
-                title: {
-                    text: "Budget Spent",
-                    style: {
-                        color: "#6D869F",
-                        fontWeight: 300
-                    }
-                },
-                labels: {
-                    format: '{value} %'
-                },
-                min: -50,
-                max: 50,
-                tickInterval: 25,
-                gridLineColor: "#e0e0e0",
-                gridLineWidth: .5
-            },
-        
-            tooltip: {
-                enabled: false
-            },
-            
-            legend: {
-                enabled: false
-            },
-            exporting: {
-                enabled: false
-            },
-            credits: {
-                enabled: false
-            },
-        
-            series: [{
-                name: 'Budget',
-                data: budget,
-                zIndex: 1,
-                marker: {
-                    fillColor: 'white',
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[0],
-                    radius: 1,
-                    symbol: "diamond"
-                }
-            }, {
-                name: 'Range',
-                data: mktg_ranges,
-                type: 'arearange',
-                lineWidth: 0,
-                linkedTo: ':previous',
-                color: Highcharts.getOptions().colors[0],
-                fillOpacity: 0.3,
-                zIndex: 0
-            }]
-        
-        });
-
-
-        $('#sales').highcharts({
-        
-            title: {
-                text: null
-            },
-        
-            xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                labels: {
-                    enabled: false
-                },
-                gridLineWidth: 1,
-                tickLength: 0
-            },
-            
-            yAxis: {
-                title: {
-                    text: "Budget Spent",
-                    style: {
-                        color: "#6D869F",
-                        fontWeight: 300
-                    }
-                },
-                labels: {
-                    format: '{value} %'
-                },
-                min: -50,
-                max: 50,
-                tickInterval: 25,
-                gridLineColor: "#e0e0e0",
-                gridLineWidth: .5
-            },
-        
-            tooltip: {
-                enabled: false
-            },
-
-            legend: {
-                enabled: false
-            },
-            exporting: {
-                enabled: false
-            },
-            credits: {
-                enabled: false
-            },
-        
-            series: [{
-                name: 'Budget',
-                data: budget,
-                zIndex: 1,
-                marker: {
-                    fillColor: 'white',
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[0],
-                    radius: 1,
-                    symbol: "diamond"
-                }
-            }, {
-                name: 'Range',
-                data: sales_ranges,
-                type: 'arearange',
-                lineWidth: 0,
-                linkedTo: ':previous',
-                color: Highcharts.getOptions().colors[0],
-                fillOpacity: 0.3,
-                zIndex: 0
-            }]
-        
-        });
-
-
-        $('#ts').highcharts({
-        
-            title: {
-                text: null
-            },
-        
-            xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                labels: {
-                    x: 0,
-                    y: 10,
-                    style: {
-                        color: '#c0c0c0',
-                        fontSize: 10
-                    }
-                },
-                gridLineWidth: 1,
-                tickLength: 0
-            },
-            
-            
-            yAxis: {
-                title: {
-                    text: "Budget Spent",
-                    style: {
-                        color: "#6D869F",
-                        fontWeight: 300
-                    }
-                },
-                labels: {
-                    format: '{value} %'
-                },
-                min: -50,
-                max: 50,
-                tickInterval: 25,
-                gridLineColor: "#e0e0e0",
-                gridLineWidth: .5
-            },
-        
         
             tooltip: {
                 crosshairs: true,
@@ -626,14 +285,232 @@ $(function () {
         
             series: [{
                 name: 'Budget',
-                data: budget,
+                data: fin_budget,
                 zIndex: 1,
                 marker: {
                     fillColor: 'white',
                     lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[0],
-                    radius: 1,
-                    symbol: "diamond"
+                    lineColor: Highcharts.getOptions().colors[0]
+                }
+            }, {
+                name: 'Range',
+                data: fin_ranges,
+                type: 'arearange',
+                lineWidth: 0,
+                linkedTo: ':previous',
+                color: Highcharts.getOptions().colors[0],
+                fillOpacity: 0.3,
+                zIndex: 0
+            }]
+        
+        });
+
+
+        $('#hr').highcharts({
+        
+            title: {
+                text: 'Human Resources Expenditures'
+            },
+        
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            
+            yAxis: {
+                title: {
+                    text: null
+                }
+            },
+        
+            tooltip: {
+                crosshairs: true,
+                shared: true,
+                valuePrefix: '$'
+            },
+            
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            credits: {
+                enabled: false
+            },
+        
+            series: [{
+                name: 'Budget',
+                data: hr_budget,
+                zIndex: 1,
+                marker: {
+                    fillColor: 'white',
+                    lineWidth: 2,
+                    lineColor: Highcharts.getOptions().colors[0]
+                }
+            }, {
+                name: 'Range',
+                data: hr_ranges,
+                type: 'arearange',
+                lineWidth: 0,
+                linkedTo: ':previous',
+                color: Highcharts.getOptions().colors[0],
+                fillOpacity: 0.3,
+                zIndex: 0
+            }]
+        
+        });
+
+
+        $('#mktg').highcharts({
+        
+            title: {
+                text: 'Marketing Expenditures'
+            },
+        
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            
+            yAxis: {
+                title: {
+                    text: null
+                }
+            },
+        
+            tooltip: {
+                crosshairs: true,
+                shared: true,
+                valuePrefix: '$'
+            },
+            
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            credits: {
+                enabled: false
+            },
+        
+            series: [{
+                name: 'Budget',
+                data: mktg_budget,
+                zIndex: 1,
+                marker: {
+                    fillColor: 'white',
+                    lineWidth: 2,
+                    lineColor: Highcharts.getOptions().colors[0]
+                }
+            }, {
+                name: 'Range',
+                data: mktg_ranges,
+                type: 'arearange',
+                lineWidth: 0,
+                linkedTo: ':previous',
+                color: Highcharts.getOptions().colors[0],
+                fillOpacity: 0.3,
+                zIndex: 0
+            }]
+        
+        });
+
+
+        $('#sales').highcharts({
+        
+            title: {
+                text: 'Sales Expenditures'
+            },
+        
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            
+            yAxis: {
+                title: {
+                    text: null
+                }
+            },
+        
+            tooltip: {
+                crosshairs: true,
+                shared: true,
+                valuePrefix: '$'
+            },
+
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            credits: {
+                enabled: false
+            },
+        
+            series: [{
+                name: 'Budget',
+                data: sales_budget,
+                zIndex: 1,
+                marker: {
+                    fillColor: 'white',
+                    lineWidth: 2,
+                    lineColor: Highcharts.getOptions().colors[0]
+                }
+            }, {
+                name: 'Range',
+                data: sales_ranges,
+                type: 'arearange',
+                lineWidth: 0,
+                linkedTo: ':previous',
+                color: Highcharts.getOptions().colors[0],
+                fillOpacity: 0.3,
+                zIndex: 0
+            }]
+        
+        });
+
+
+        $('#ts').highcharts({
+        
+            title: {
+                text: 'Technical Support Expenditures'
+            },
+        
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            
+            yAxis: {
+                title: {
+                    text: null
+                }
+            },
+        
+            tooltip: {
+                crosshairs: true,
+                shared: true,
+                valuePrefix: '$'
+            },
+            
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            credits: {
+                enabled: false
+            },
+        
+            series: [{
+                name: 'Budget',
+                data: ts_budget,
+                zIndex: 1,
+                marker: {
+                    fillColor: 'white',
+                    lineWidth: 2,
+                    lineColor: Highcharts.getOptions().colors[0]
                 }
             }, {
                 name: 'Range',

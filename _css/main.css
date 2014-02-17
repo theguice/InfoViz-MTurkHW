@@ -65,3 +65,7 @@ table {
   height: 400px; 
   width: 800px;
 }
+.small-multiple {
+	height: 100px;
+	width: 500px;
+}
