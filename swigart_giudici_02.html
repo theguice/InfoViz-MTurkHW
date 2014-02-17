@@ -9,7 +9,7 @@
     <script src="http://code.highcharts.com/modules/exporting.js"></script>
 </head>
 <body>
-    <br/>
+    <center><h3>Company Expenditures by Department</h3></center>
     <div id="it" class="small-multiple">
     </div>
     <div id="exec" class="small-multiple">
@@ -31,7 +31,7 @@
 $(function () {
 
     var budget = [
-            [0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0]
+            [0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0]
         ],
     it_ranges = [
             [0,2.9],[0,4.9],[0,2.8],[0,2.7],[0,3.2],[0,6.8],[0,11.4],[0,12.6],[0,10.4],[0,8.4],[0,5.2]
@@ -60,29 +60,38 @@ $(function () {
 
 
     
-        $('#it').highcharts({
+        $('.small-multiple').highcharts({
         
             title: {
-                text: null
+                text: "Information Technology", 
+                style: {
+                    color: '#333333',
+                    fontSize: '12px'
+                }
             },
         
             xAxis: {
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 labels: {
                     x: 0,
-                    y: -64,
+                    y: -5,
                     style: {
                         color: '#c0c0c0',
                         fontSize: 10
                     }
                 },
                 gridLineWidth: 1,
-                tickLength: 0
+                tickLength: 0,
+                plotBands: [{ // visualize prospective
+                    from: 9.5,
+                    to: 10.5,
+                    color: 'rgba(200, 200, 240, .2)'
+                }]
             },
             
             yAxis: {
                 title: {
-                    text: "Budget Spent",
+                    text: "Budget Overage",
                     style: {
                         color: "#6D869F",
                         fontWeight: 300
@@ -116,10 +125,11 @@ $(function () {
                 name: 'Budget',
                 data: budget,
                 zIndex: 1,
+                color: Highcharts.getOptions().colors[1],
                 marker: {
                     fillColor: 'white',
                     lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[0],
+                    lineColor: Highcharts.getOptions().colors[1],
                     radius: 1,
                     symbol: "diamond"
                 }
@@ -129,8 +139,8 @@ $(function () {
                 type: 'arearange',
                 lineWidth: 0,
                 linkedTo: ':previous',
-                color: Highcharts.getOptions().colors[0],
-                fillOpacity: 0.3,
+                color: Highcharts.getOptions().colors[1],
+                fillOpacity: 0.5,
                 zIndex: 0
             }]
         
@@ -139,21 +149,35 @@ $(function () {
         $('#exec').highcharts({
         
             title: {
-                text: null
+                text: "Executive", 
+                style: {
+                    color: '#333333',
+                    fontSize: '12px'
+                }
             },
         
             xAxis: {
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 labels: {
-                    enabled: false
+                    x: 0,
+                    y: -5,
+                    style: {
+                        color: '#c0c0c0',
+                        fontSize: 10
+                    }
                 },
                 gridLineWidth: 1,
-                tickLength: 0
+                tickLength: 0,
+                plotBands: [{ // visualize prospective
+                    from: 9.5,
+                    to: 10.5,
+                    color: 'rgba(200, 200, 240, .2)'
+                }]
             },
             
             yAxis: {
                 title: {
-                    text: "Budget Spent",
+                    text: "Budget Overage",
                     style: {
                         color: "#6D869F",
                         fontWeight: 300
@@ -187,10 +211,11 @@ $(function () {
                 name: 'Budget',
                 data: budget,
                 zIndex: 1,
+                color: Highcharts.getOptions().colors[1],
                 marker: {
                     fillColor: 'white',
                     lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[0],
+                    lineColor: Highcharts.getOptions().colors[1],
                     radius: 1,
                     symbol: "diamond"
                 }
@@ -200,8 +225,8 @@ $(function () {
                 type: 'arearange',
                 lineWidth: 0,
                 linkedTo: ':previous',
-                color: Highcharts.getOptions().colors[0],
-                fillOpacity: 0.3,
+                color: Highcharts.getOptions().colors[1],
+                fillOpacity: 0.5,
                 zIndex: 0
             }]
         
@@ -211,21 +236,35 @@ $(function () {
         $('#fac').highcharts({
         
             title: {
-                text: null
+                text: "Facilities", 
+                style: {
+                    color: '#333333',
+                    fontSize: '12px'
+                }
             },
         
             xAxis: {
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 labels: {
-                    enabled: false
+                    x: 0,
+                    y: -5,
+                    style: {
+                        color: '#c0c0c0',
+                        fontSize: 10
+                    }
                 },
                 gridLineWidth: 1,
-                tickLength: 0
+                tickLength: 0,
+                plotBands: [{ // visualize prospective
+                    from: 9.5,
+                    to: 10.5,
+                    color: 'rgba(200, 200, 240, .2)'
+                }]
             },
-            
+
             yAxis: {
                 title: {
-                    text: "Budget Spent",
+                    text: "Budget Overage",
                     style: {
                         color: "#6D869F",
                         fontWeight: 300
@@ -259,10 +298,11 @@ $(function () {
                 name: 'Budget',
                 data: budget,
                 zIndex: 1,
+                color: Highcharts.getOptions().colors[1],
                 marker: {
                     fillColor: 'white',
                     lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[0],
+                    lineColor: Highcharts.getOptions().colors[1],
                     radius: 1,
                     symbol: "diamond"
                 }
@@ -272,8 +312,8 @@ $(function () {
                 type: 'arearange',
                 lineWidth: 0,
                 linkedTo: ':previous',
-                color: Highcharts.getOptions().colors[0],
-                fillOpacity: 0.3,
+                color: Highcharts.getOptions().colors[1],
+                fillOpacity: 0.5,
                 zIndex: 0
             }]
         
@@ -283,21 +323,35 @@ $(function () {
         $('#fin').highcharts({
         
             title: {
-                text: null
+                text: "Finance", 
+                style: {
+                    color: '#333333',
+                    fontSize: '12px'
+                }
             },
         
             xAxis: {
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 labels: {
-                    enabled: false
+                    x: 0,
+                    y: -5,
+                    style: {
+                        color: '#c0c0c0',
+                        fontSize: 10
+                    }
                 },
                 gridLineWidth: 1,
-                tickLength: 0
+                tickLength: 0,
+                plotBands: [{ // visualize prospective
+                    from: 9.5,
+                    to: 10.5,
+                    color: 'rgba(200, 200, 240, .2)'
+                }]
             },
             
             yAxis: {
                 title: {
-                    text: "Budget Spent",
+                    text: "Budget Overage",
                     style: {
                         color: "#6D869F",
                         fontWeight: 300
@@ -331,10 +385,11 @@ $(function () {
                 name: 'Budget',
                 data: budget,
                 zIndex: 1,
+                color: Highcharts.getOptions().colors[1],
                 marker: {
                     fillColor: 'white',
                     lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[0],
+                    lineColor: Highcharts.getOptions().colors[1],
                     radius: 1,
                     symbol: "diamond"
                 }
@@ -344,8 +399,8 @@ $(function () {
                 type: 'arearange',
                 lineWidth: 0,
                 linkedTo: ':previous',
-                color: Highcharts.getOptions().colors[0],
-                fillOpacity: 0.3,
+                color: Highcharts.getOptions().colors[1],
+                fillOpacity: 0.5,
                 zIndex: 0
             }]
         
@@ -355,21 +410,35 @@ $(function () {
         $('#hr').highcharts({
         
             title: {
-                text: null
+                text: "Human Resources", 
+                style: {
+                    color: '#333333',
+                    fontSize: '12px'
+                }
             },
         
             xAxis: {
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 labels: {
-                    enabled: false
+                    x: 0,
+                    y: -5,
+                    style: {
+                        color: '#c0c0c0',
+                        fontSize: 10
+                    }
                 },
                 gridLineWidth: 1,
-                tickLength: 0
+                tickLength: 0,
+                plotBands: [{ // visualize prospective
+                    from: 9.5,
+                    to: 10.5,
+                    color: 'rgba(200, 200, 240, .2)'
+                }]
             },
-            
+
             yAxis: {
                 title: {
-                    text: "Budget Spent",
+                    text: "Budget Overage",
                     style: {
                         color: "#6D869F",
                         fontWeight: 300
@@ -403,10 +472,11 @@ $(function () {
                 name: 'Budget',
                 data: budget,
                 zIndex: 1,
+                color: Highcharts.getOptions().colors[1],
                 marker: {
                     fillColor: 'white',
                     lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[0],
+                    lineColor: Highcharts.getOptions().colors[1],
                     radius: 1,
                     symbol: "diamond"
                 }
@@ -416,8 +486,8 @@ $(function () {
                 type: 'arearange',
                 lineWidth: 0,
                 linkedTo: ':previous',
-                color: Highcharts.getOptions().colors[0],
-                fillOpacity: 0.3,
+                color: Highcharts.getOptions().colors[1],
+                fillOpacity: 0.5,
                 zIndex: 0
             }]
         
@@ -427,21 +497,35 @@ $(function () {
         $('#mktg').highcharts({
         
             title: {
-                text: null
+                text: "Marketing", 
+                style: {
+                    color: '#333333',
+                    fontSize: '12px'
+                }
             },
         
             xAxis: {
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 labels: {
-                    enabled: false
+                    x: 0,
+                    y: -5,
+                    style: {
+                        color: '#c0c0c0',
+                        fontSize: 10
+                    }
                 },
                 gridLineWidth: 1,
-                tickLength: 0
+                tickLength: 0,
+                plotBands: [{ // visualize prospective
+                    from: 9.5,
+                    to: 10.5,
+                    color: 'rgba(200, 200, 240, .2)'
+                }]
             },
             
             yAxis: {
                 title: {
-                    text: "Budget Spent",
+                    text: "Budget Overage",
                     style: {
                         color: "#6D869F",
                         fontWeight: 300
@@ -475,10 +559,11 @@ $(function () {
                 name: 'Budget',
                 data: budget,
                 zIndex: 1,
+                color: Highcharts.getOptions().colors[1],
                 marker: {
                     fillColor: 'white',
                     lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[0],
+                    lineColor: Highcharts.getOptions().colors[1],
                     radius: 1,
                     symbol: "diamond"
                 }
@@ -488,8 +573,8 @@ $(function () {
                 type: 'arearange',
                 lineWidth: 0,
                 linkedTo: ':previous',
-                color: Highcharts.getOptions().colors[0],
-                fillOpacity: 0.3,
+                color: Highcharts.getOptions().colors[1],
+                fillOpacity: 0.5,
                 zIndex: 0
             }]
         
@@ -499,21 +584,35 @@ $(function () {
         $('#sales').highcharts({
         
             title: {
-                text: null
+                text: "Sales", 
+                style: {
+                    color: '#333333',
+                    fontSize: '12px'
+                }
             },
         
             xAxis: {
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 labels: {
-                    enabled: false
+                    x: 0,
+                    y: -5,
+                    style: {
+                        color: '#c0c0c0',
+                        fontSize: 10
+                    }
                 },
                 gridLineWidth: 1,
-                tickLength: 0
+                tickLength: 0,
+                plotBands: [{ // visualize prospective
+                    from: 9.5,
+                    to: 10.5,
+                    color: 'rgba(200, 200, 240, .2)'
+                }]
             },
             
             yAxis: {
                 title: {
-                    text: "Budget Spent",
+                    text: "Budget Overage",
                     style: {
                         color: "#6D869F",
                         fontWeight: 300
@@ -547,10 +646,11 @@ $(function () {
                 name: 'Budget',
                 data: budget,
                 zIndex: 1,
+                color: Highcharts.getOptions().colors[1],
                 marker: {
                     fillColor: 'white',
                     lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[0],
+                    lineColor: Highcharts.getOptions().colors[1],
                     radius: 1,
                     symbol: "diamond"
                 }
@@ -560,8 +660,8 @@ $(function () {
                 type: 'arearange',
                 lineWidth: 0,
                 linkedTo: ':previous',
-                color: Highcharts.getOptions().colors[0],
-                fillOpacity: 0.3,
+                color: Highcharts.getOptions().colors[1],
+                fillOpacity: 0.5,
                 zIndex: 0
             }]
         
@@ -571,27 +671,36 @@ $(function () {
         $('#ts').highcharts({
         
             title: {
-                text: null
+                text: "Technical Support", 
+                style: {
+                    color: '#333333',
+                    fontSize: '12px'
+                }
             },
         
             xAxis: {
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 labels: {
                     x: 0,
-                    y: 10,
+                    y: -5,
                     style: {
                         color: '#c0c0c0',
                         fontSize: 10
                     }
                 },
                 gridLineWidth: 1,
-                tickLength: 0
+                tickLength: 0,
+                plotBands: [{ // visualize prospective
+                    from: 9.5,
+                    to: 10.5,
+                    color: 'rgba(200, 200, 240, .2)'
+                }]
             },
             
             
             yAxis: {
                 title: {
-                    text: "Budget Spent",
+                    text: "Budget Overage",
                     style: {
                         color: "#6D869F",
                         fontWeight: 300
@@ -609,9 +718,7 @@ $(function () {
         
         
             tooltip: {
-                crosshairs: true,
-                shared: true,
-                valuePrefix: '$'
+                enabled: false
             },
             
             legend: {
@@ -628,10 +735,11 @@ $(function () {
                 name: 'Budget',
                 data: budget,
                 zIndex: 1,
+                color: Highcharts.getOptions().colors[1],
                 marker: {
                     fillColor: 'white',
                     lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[0],
+                    lineColor: Highcharts.getOptions().colors[1],
                     radius: 1,
                     symbol: "diamond"
                 }
@@ -641,8 +749,8 @@ $(function () {
                 type: 'arearange',
                 lineWidth: 0,
                 linkedTo: ':previous',
-                color: Highcharts.getOptions().colors[0],
-                fillOpacity: 0.3,
+                color: Highcharts.getOptions().colors[1],
+                fillOpacity: 0.5,
                 zIndex: 0
             }]
         
