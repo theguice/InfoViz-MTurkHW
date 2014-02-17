@@ -15,11 +15,10 @@ var options = {
   chart: {
     renderTo: "line-chart",
     defaultSeriesType: "line",
- //   backgroundColor: '#99FF99'
 
   },
   title: {
-    text: 'TITLE'
+    text: ''
 
   },
   legend: {
@@ -36,9 +35,23 @@ var options = {
   },
   yAxis: {
     title: {
-      text: 'Percent Expenditures over Budget'
+      text: 'Expenditures over Budget'
     },
-    gridLineDashStyle: 'dot'
+    labels: {
+      format: '{value} %'
+    },
+    gridLineDashStyle: 'dot',
+    plotBands: [{
+      from: -40,
+      to: 0,
+      color: '#F0F0F0'
+ //   }, {
+  //    from: 0,
+   //   to: 60,
+    //  color: '#FF9999'
+    }
+    ]
+
   },
   legend: {
     layout: 'vertical',
@@ -65,7 +78,7 @@ var options = {
     dashStyle: 'shortDot'
 
   }, {
-    color: '#9933CC',
+    color: '#CC00CC',
     marker: {
       symbol: 'diamond',
     },
@@ -74,7 +87,7 @@ var options = {
 
   }, {
     //HR predicted
-    color: '#9933CC',
+    color: '#CC00CC',
     showInLegend: false,
     marker: {
       symbol: 'diamond',
@@ -103,7 +116,7 @@ var options = {
     dashStyle: 'shortDot'
 
   }, {
-    color: '#8C79A6',
+    color: '#0066CC',
     marker: {
       symbol: 'triangle',
     },
@@ -111,7 +124,7 @@ var options = {
     data: [-1.00, -3.00, -5.00, -3.00, 4.00, 52.00, -11.00, -10.00, -14.00, -7.00, null]
    }, {
    //Marketing predicted
-    color: '#8C79A6',
+    color: '#0066CC',
     showInLegend: false,
     marker: {
       symbol: 'triangle',
