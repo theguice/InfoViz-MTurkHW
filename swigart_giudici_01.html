@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8" />
-    <title>Student Grades</title>
+    <title>Expenditures Across Departments</title>
     <link rel="stylesheet" href="_css/main.css">
     <script src="_js/jquery-1.11.0.min.js"></script>
     <script src="_js/highcharts.js"></script>
@@ -11,66 +11,194 @@
     </div>
 
 <script>
-$(function () {
-  $('#line-chart').highcharts({
+var options = {
+  chart: {
+    renderTo: "line-chart",
+    defaultSeriesType: "line",
+ //   backgroundColor: '#99FF99'
+
+  },
+  title: {
+    text: 'TITLE'
+
+  },
+  legend: {
     title: {
-      text: 'TITLE'
+      text: 'Departments'
+    }
+  },
+  xAxis: {
+    categories: [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov'
+      ],
+      tickmarkPlacement: 'on'
+  },
+  yAxis: {
+    title: {
+      text: 'Percent Expenditures over Budget'
     },
-    xAxis: {
-      categories: [
-        'Jan', 'Feb', 'Mar', 'Apr', 'May','Jun',
-        'Jul', 'Aug', 'Sep', 'Oct','Nov'
-        ]
+    gridLineDashStyle: 'dot'
+  },
+  legend: {
+    layout: 'vertical',
+    align: 'right',
+    verticalAlign: 'middle',
+    borderWidth: 0
+  },
+  series: [{
+    color: '#CC0033',
+    marker: {
+      symbol: 'circle',
     },
-    yAxis: {
-      title: {
-        text: 'Percent Expenditures over Budget'
-      }
+    name: 'Executive',
+    data: [ -1.60, -0.78, 44.23, 41.89, 42.22, 41.09, 40.71, 35.86, 31.33, 29.84, null]
+  }, {
+    //Executive predicted
+    color: '#CC0033',
+    showInLegend: false,
+    marker: {
+      symbol: 'circle',
     },
-    legend: {
-      layout: 'vertical',
-      align: 'right',
-      verticalAlign: 'middle',
-      borderWidth: 0
-    },
-    series: [{
-  //    color: '#8F2F10',
-      name: 'Executive',
-      data: [ -1.60, -0.78, 44.23, 41.89, 42.22, 41.09, 40.71, 35.86, 31.33, 29.84, 29.68]
-    }, {
-  //    color: '#6DB3B3',
-      name: 'Human Resources',
-      data: [2.00, 28.00, 16.00, 3.92, -1.96, -1.96, -7.69, -9.62, -5.77, -5.66, -5.66]
-    }, {
-  //    color: '#E3CB46',
-      name: 'Information Technology',
-      data: [2.89, 4.89, 2.77, 2.74, 3.16, 6.80, 11.40, 12.60, 10.40, 8.40, 5.20]
-    }, {
-  //    color: '#8C79A6',
-      name: 'Marketing',
-      data: [-1.00, -3.00, -5.00, -3.00, 4.00, 52.00, -11.00, -10.00, -14.00, -7.00, -2.67]
-     }, {
-  //    color: '#E3CB46',
-      name: 'Sales',
-      data: [2.75, -3.58, -1.68, -0.40, 1.88, 0.00, 0.39, -1.24, -0.21, -0.19, 0.82]
-    }, {
-  //    color: '#E3CB46',
-      name: 'Facilities',
-      data: [1.58, 2.63, 3.33, 2.35, -2.35, -6.67, 5.26, 5.00, 4.00, -3.68, -8.42]
-     }, {
-  //    color: '#E3CB46',
-      name: 'Finance',
-      data: [-4.00, -5.00, -5.00, -10.91, -8.18, -0.91, -8.33, -6.67, -6.67, -5.83, 10.00]
-     }, {
-  //    color: '#E3CB46',
-      name: 'Technical Support',
-      data: [-17.14, -20.00, -20.00, -25.00, -27.78, -27.78, -32.43, -32.43, -29.73, -34.21, -31.58]
-    }]
-  });
+    name: 'Executive Predicted',
+    data: [ null, null, null, null, null, null, null, null, null, 29.84, 29.68],
+    dashStyle: 'shortDot'
 
-  $('#line-chart').highcharts.series.data[10].addClass('projected');
+  }, {
+    color: '#9933CC',
+    marker: {
+      symbol: 'diamond',
+    },
+    name: 'Human Resources',
+    data: [2.00, 28.00, 16.00, 3.92, -1.96, -1.96, -7.69, -9.62, -5.77, -5.66, null]
 
-});
+  }, {
+    //HR predicted
+    color: '#9933CC',
+    showInLegend: false,
+    marker: {
+      symbol: 'diamond',
+    },
+    name: 'Human Resources Predicted',
+    data: [ null, null, null, null, null, null, null, null, null, -5.66, -5.66],
+    dashStyle: 'shortDot'
+
+  }, {
+    color: '#FF9933',
+    marker: {
+      symbol: 'square',
+    },
+    name: 'Information Technology',
+    data: [2.89, 4.89, 2.77, 2.74, 3.16, 6.80, 11.40, 12.60, 10.40, 8.40, null]
+
+  }, {
+   //IT predicted
+    color: '#FF9933',
+    showInLegend: false,
+    marker: {
+      symbol: 'square',
+    },
+    name: 'Information Technology Predicted',
+    data: [ null, null, null, null, null, null, null, null, null, 8.40, 5.20],
+    dashStyle: 'shortDot'
+
+  }, {
+    color: '#8C79A6',
+    marker: {
+      symbol: 'triangle',
+    },
+    name: 'Marketing',
+    data: [-1.00, -3.00, -5.00, -3.00, 4.00, 52.00, -11.00, -10.00, -14.00, -7.00, null]
+   }, {
+   //Marketing predicted
+    color: '#8C79A6',
+    showInLegend: false,
+    marker: {
+      symbol: 'triangle',
+    },
+    name: 'Marketing Predicted',
+    data: [ null, null, null, null, null, null, null, null, null, -7.00, -2.67],
+    dashStyle: 'shortDot'
+
+  }, {
+    color: '#E3CB46',
+    marker: {
+      symbol: 'circle',
+    },
+    name: 'Sales',
+    data: [2.75, -3.58, -1.68, -0.40, 1.88, 0.00, 0.39, -1.24, -0.21, -0.19, null]
+  }, {
+  //Sales predicted
+    color: '#E3CB46',
+    showInLegend: false,
+    marker: {
+      symbol: 'circle',
+    },
+    name: 'Sales Predicted',
+    data: [ null, null, null, null, null, null, null, null, null, -0.19, 0.82],
+    dashStyle: 'shortDot'
+
+  }, {
+    color: '#33FFCC',
+    marker: {
+      symbol: 'diamond',
+    },
+    name: 'Facilities',
+    data: [1.58, 2.63, 3.33, 2.35, -2.35, -6.67, 5.26, 5.00, 4.00, -3.68, null]
+   }, {
+   //Facilities predicted
+    color: '#33FFCC',
+    showInLegend: false,
+    marker: {
+      symbol: 'diamond',
+    },
+    name: 'Facilities Predicted',
+    data: [ null, null, null, null, null, null, null, null, null, -3.68, -8.42],
+    dashStyle: 'shortDot'
+
+  }, {
+    color: '#99CCFF',
+    marker: {
+      symbol: 'square',
+    },
+    name: 'Finance',
+    data: [-4.00, -5.00, -5.00, -10.91, -8.18, -0.91, -8.33, -6.67, -6.67, -5.83, null]
+   }, {
+   //Finance predicted
+    color: '#99CCFF',
+    showInLegend: false,
+    marker: {
+      symbol: 'square',
+    },
+    name: 'Finance Predicted',
+    data: [ null, null, null, null, null, null, null, null, null, -5.83, 10.00],
+    dashStyle: 'shortDot'
+
+  }, {
+    color: '#009933',
+    marker: {
+      symbol: 'triangle',
+    },
+    name: 'Technical Support',
+    data: [-17.14, -20.00, -20.00, -25.00, -27.78, -27.78, -32.43, -32.43, -29.73, -34.21, null]
+   }, {
+   //Tech Support predicted
+    color: '#009933',
+    showInLegend: false,
+    marker: {
+      symbol: 'triangle',
+    },
+    name: 'Tech Support Predicted',
+    data: [ null, null, null, null, null, null, null, null, null, -34.21, -31.58],
+    dashStyle: 'shortDot'
+
+  }
+  ]
+};
+
+ // $('#line-chart').highcharts.series.data[10].addClass('projected');
+var chart = new Highcharts.Chart(options);
+
 </script>
 
 </body>
