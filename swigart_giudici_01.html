@@ -15,11 +15,16 @@ var options = {
   chart: {
     renderTo: "line-chart",
     defaultSeriesType: "line",
-
+    style: {
+      padding: '5px',
+    },
   },
   title: {
-    text: ''
-
+    text: 'Budget Performance by Department',
+    x: -50, //center
+    style: {
+        color: '#000000',
+      },
   },
   legend: {
     title: {
@@ -35,7 +40,11 @@ var options = {
   },
   yAxis: {
     title: {
-      text: 'Expenditures over Budget'
+      text: 'Expenditures over Budget',
+      style: {
+        color: '#000000',
+      },
+
     },
     labels: {
       format: '{value} %'
@@ -45,15 +54,17 @@ var options = {
       from: -40,
       to: 0,
       color: '#F0F0F0'
- //   }, {
-  //    from: 0,
-   //   to: 60,
-    //  color: '#FF9999'
-    }
-    ]
-
+    }]
   },
   legend: {
+    title: {
+      text: 'Departments',
+      style: {
+     //   align: 'center',
+        fontVariant: 'small-caps',
+        textAlign: 'center',
+      },
+    },
     layout: 'vertical',
     align: 'right',
     verticalAlign: 'middle',
@@ -78,7 +89,7 @@ var options = {
     dashStyle: 'shortDot'
 
   }, {
-    color: '#CC00CC',
+    color: '#FF66CC',
     marker: {
       symbol: 'diamond',
     },
@@ -87,7 +98,7 @@ var options = {
 
   }, {
     //HR predicted
-    color: '#CC00CC',
+    color: '#FF66CC',
     showInLegend: false,
     marker: {
       symbol: 'diamond',
