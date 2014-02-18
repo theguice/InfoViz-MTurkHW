@@ -1,232 +1,762 @@
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8" />
-    <title>Expenditures Across Departments</title>
+    <title>Company Budget</title>
     <link rel="stylesheet" href="_css/main.css">
     <script src="_js/jquery-1.11.0.min.js"></script>
     <script src="_js/highcharts.js"></script>
+    <script src="http://code.highcharts.com/highcharts-more.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
 </head>
 <body>
-    <div id="line-chart">
+    <center><h3>Company Expenditures by Department</h3></center>
+    <div id="it" class="small-multiple">
+    </div>
+    <div id="exec" class="small-multiple">
+    </div>
+    <div id="fac" class="small-multiple">
+    </div>
+    <div id="fin" class="small-multiple">
+    </div>
+    <div id="hr" class="small-multiple">
+    </div>
+    <div id="mktg" class="small-multiple">
+    </div>
+    <div id="sales" class="small-multiple">
+    </div>
+    <div id="ts" class="small-multiple">
     </div>
 
 <script>
-var options = {
-  chart: {
-    renderTo: "line-chart",
-    defaultSeriesType: "line",
-    style: {
-      padding: '5px',
-    },
-  },
-  title: {
-    text: 'Budget Performance by Department',
-    x: -50, //center
-    style: {
-        color: '#000000',
-      },
-  },
-  legend: {
-    title: {
-      text: 'Departments'
-    }
-  },
-  xAxis: {
-    categories: [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov'
-      ],
-      tickmarkPlacement: 'on'
-  },
-  yAxis: {
-    title: {
-      text: 'Expenditures over Budget',
-      style: {
-        color: '#000000',
-      },
+$(function () {
 
-    },
-    labels: {
-      format: '{value} %'
-    },
-    gridLineDashStyle: 'dot',
-    plotBands: [{
-      from: -40,
-      to: 0,
-      color: '#F0F0F0'
-    }]
-  },
-  legend: {
-    title: {
-      text: 'Departments',
-      style: {
-     //   align: 'center',
-        fontVariant: 'small-caps',
-        textAlign: 'center',
-      },
-    },
-    layout: 'vertical',
-    align: 'right',
-    verticalAlign: 'middle',
-    borderWidth: 0
+    var budget = [
+            [0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0]
+        ],
+    it_ranges = [
+            [0,2.9],[0,4.9],[0,2.8],[0,2.7],[0,3.2],[0,6.8],[0,11.4],[0,12.6],[0,10.4],[0,8.4],[0,5.2]
+        ],
+    exec_ranges = [
+            [0,-1.6],[0,-0.8],[0,44.2],[0,41.9],[0,42.2],[0,41.1],[0,40.7],[0,35.9],[0,31.3],[0,29.8],[0,29.7]
+        ],
+    fac_ranges = [
+           [0,1.6],[0,2.6],[0,3.3],[0,2.4],[0,-2.4],[0,-6.7],[0,5.3],[0,5],[0,4],[0,-3.7],[0,-8.4]
+        ],
+    fin_ranges = [
+            [0,-4],[0,-5],[0,-5],[0,-10.9],[0,-8.2],[0,-0.9],[0,-8.3],[0,-6.7],[0,-6.7],[0,-5.8],[0,10]
+        ],
+    hr_ranges = [
+            [0,2],[0,28],[0,16],[0,3.9],[0,-2],[0,-2],[0,-7.7],[0,-9.6],[0,-5.8],[0,-5.7],[0,-5.7]
+        ],
+    mktg_ranges = [
+            [0,-1],[0,-3],[0,-5],[0,-3],[0,4],[0,52],[0,-11],[0,-10],[0,-14],[0,-7],[0,-2.7]
+        ],
+    sales_ranges = [
+            [0,2.7],[0,-3.6],[0,-1.7],[0,-0.4],[0,1.9],[0,0],[0,0.4],[0,-1.2],[0,-0.2],[0,-0.2],[0,0.8]
+        ],
+    ts_ranges = [
+            [0,-17.1],[0,-20],[0,-20],[0,-25],[0,-27.8],[0,-27.8],[0,-32.4],[0,-32.4],[0,-29.7],[0,-34.2],[0,-31.6]
+        ];
 
-  },
-  tooltip: {
-    valueSuffix: '%',
-  },
 
-  series: [{
-    color: '#CC0033',
-    marker: {
-      symbol: 'circle',
-    },
-    name: 'Executive',
-    data: [ -1.60, -0.78, 44.23, 41.89, 42.22, 41.09, 40.71, 35.86, 31.33, 29.84, null]
-  }, {
-    //Executive predicted
-    color: '#CC0033',
-    showInLegend: false,
-    marker: {
-      symbol: 'circle',
-    },
-    name: 'Executive Predicted',
-    data: [ null, null, null, null, null, null, null, null, null, 29.84, 29.68],
-    dashStyle: 'shortDot'
+    
+        $('.small-multiple').highcharts({
+        
+            title: {
+                text: "Information Technology", 
+                style: {
+                    color: '#333333',
+                    fontSize: '12px'
+                }
+            },
+        
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                labels: {
+                    x: 0,
+                    y: -5,
+                    style: {
+                        color: '#c0c0c0',
+                        fontSize: 10
+                    }
+                },
+                gridLineWidth: 1,
+                tickLength: 0,
+                plotBands: [{ // visualize prospective
+                    from: 9.5,
+                    to: 10.5,
+                    color: 'rgba(200, 200, 240, .2)'
+                }]
+            },
+            
+            yAxis: {
+                title: {
+                    text: "Budget Overage",
+                    style: {
+                        color: "#6D869F",
+                        fontWeight: 300
+                    }
+                },
+                labels: {
+                    format: '{value} %'
+                },
+                min: -50,
+                max: 50,
+                tickInterval: 25,
+                gridLineColor: "#e0e0e0",
+                gridLineWidth: .5
+            },
+        
+            tooltip: {
+                enabled: false
+            },
+            
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            credits: {
+                enabled: false
+            },
+        
+            series: [{
+                name: 'Budget',
+                data: budget,
+                zIndex: 1,
+                color: Highcharts.getOptions().colors[1],
+                marker: {
+                    fillColor: 'white',
+                    lineWidth: 2,
+                    lineColor: Highcharts.getOptions().colors[1],
+                    radius: 1,
+                    symbol: "diamond"
+                }
+            }, {
+                name: 'Range',
+                data: it_ranges,
+                type: 'arearange',
+                lineWidth: 0,
+                linkedTo: ':previous',
+                color: Highcharts.getOptions().colors[1],
+                fillOpacity: 0.5,
+                zIndex: 0
+            }]
+        
+        });
 
-  }, {
-    color: '#FF66CC',
-    marker: {
-      symbol: 'diamond',
-    },
-    name: 'Human Resources',
-    data: [2.00, 28.00, 16.00, 3.92, -1.96, -1.96, -7.69, -9.62, -5.77, -5.66, null]
+        $('#exec').highcharts({
+        
+            title: {
+                text: "Executive", 
+                style: {
+                    color: '#333333',
+                    fontSize: '12px'
+                }
+            },
+        
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                labels: {
+                    x: 0,
+                    y: -5,
+                    style: {
+                        color: '#c0c0c0',
+                        fontSize: 10
+                    }
+                },
+                gridLineWidth: 1,
+                tickLength: 0,
+                plotBands: [{ // visualize prospective
+                    from: 9.5,
+                    to: 10.5,
+                    color: 'rgba(200, 200, 240, .2)'
+                }]
+            },
+            
+            yAxis: {
+                title: {
+                    text: "Budget Overage",
+                    style: {
+                        color: "#6D869F",
+                        fontWeight: 300
+                    }
+                },
+                labels: {
+                    format: '{value} %'
+                },
+                min: -50,
+                max: 50,
+                tickInterval: 25,
+                gridLineColor: "#e0e0e0",
+                gridLineWidth: .5
+            },
+        
+            tooltip: {
+                enabled: false
+            },
+            
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            credits: {
+                enabled: false
+            },
+        
+            series: [{
+                name: 'Budget',
+                data: budget,
+                zIndex: 1,
+                color: Highcharts.getOptions().colors[1],
+                marker: {
+                    fillColor: 'white',
+                    lineWidth: 2,
+                    lineColor: Highcharts.getOptions().colors[1],
+                    radius: 1,
+                    symbol: "diamond"
+                }
+            }, {
+                name: 'Range',
+                data: exec_ranges,
+                type: 'arearange',
+                lineWidth: 0,
+                linkedTo: ':previous',
+                color: Highcharts.getOptions().colors[1],
+                fillOpacity: 0.5,
+                zIndex: 0
+            }]
+        
+        });
 
-  }, {
-    //HR predicted
-    color: '#FF66CC',
-    showInLegend: false,
-    marker: {
-      symbol: 'diamond',
-    },
-    name: 'Human Resources Predicted',
-    data: [ null, null, null, null, null, null, null, null, null, -5.66, -5.66],
-    dashStyle: 'shortDot'
 
-  }, {
-    color: '#FF9933',
-    marker: {
-      symbol: 'square',
-    },
-    name: 'Information Technology',
-    data: [2.89, 4.89, 2.77, 2.74, 3.16, 6.80, 11.40, 12.60, 10.40, 8.40, null]
+        $('#fac').highcharts({
+        
+            title: {
+                text: "Facilities", 
+                style: {
+                    color: '#333333',
+                    fontSize: '12px'
+                }
+            },
+        
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                labels: {
+                    x: 0,
+                    y: -5,
+                    style: {
+                        color: '#c0c0c0',
+                        fontSize: 10
+                    }
+                },
+                gridLineWidth: 1,
+                tickLength: 0,
+                plotBands: [{ // visualize prospective
+                    from: 9.5,
+                    to: 10.5,
+                    color: 'rgba(200, 200, 240, .2)'
+                }]
+            },
 
-  }, {
-   //IT predicted
-    color: '#FF9933',
-    showInLegend: false,
-    marker: {
-      symbol: 'square',
-    },
-    name: 'Information Technology Predicted',
-    data: [ null, null, null, null, null, null, null, null, null, 8.40, 5.20],
-    dashStyle: 'shortDot'
+            yAxis: {
+                title: {
+                    text: "Budget Overage",
+                    style: {
+                        color: "#6D869F",
+                        fontWeight: 300
+                    }
+                },
+                labels: {
+                    format: '{value} %'
+                },
+                min: -50,
+                max: 50,
+                tickInterval: 25,
+                gridLineColor: "#e0e0e0",
+                gridLineWidth: .5
+            },
+        
+            tooltip: {
+                enabled: false
+            },
+            
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            credits: {
+                enabled: false
+            },
 
-  }, {
-    color: '#0066CC',
-    marker: {
-      symbol: 'triangle',
-    },
-    name: 'Marketing',
-    data: [-1.00, -3.00, -5.00, -3.00, 4.00, 52.00, -11.00, -10.00, -14.00, -7.00, null]
-   }, {
-   //Marketing predicted
-    color: '#0066CC',
-    showInLegend: false,
-    marker: {
-      symbol: 'triangle',
-    },
-    name: 'Marketing Predicted',
-    data: [ null, null, null, null, null, null, null, null, null, -7.00, -2.67],
-    dashStyle: 'shortDot'
+            series: [{
+                name: 'Budget',
+                data: budget,
+                zIndex: 1,
+                color: Highcharts.getOptions().colors[1],
+                marker: {
+                    fillColor: 'white',
+                    lineWidth: 2,
+                    lineColor: Highcharts.getOptions().colors[1],
+                    radius: 1,
+                    symbol: "diamond"
+                }
+            }, {
+                name: 'Range',
+                data: fac_ranges,
+                type: 'arearange',
+                lineWidth: 0,
+                linkedTo: ':previous',
+                color: Highcharts.getOptions().colors[1],
+                fillOpacity: 0.5,
+                zIndex: 0
+            }]
+        
+        });
 
-  }, {
-    color: '#E3CB46',
-    marker: {
-      symbol: 'circle',
-    },
-    name: 'Sales',
-    data: [2.75, -3.58, -1.68, -0.40, 1.88, 0.00, 0.39, -1.24, -0.21, -0.19, null]
-  }, {
-  //Sales predicted
-    color: '#E3CB46',
-    showInLegend: false,
-    marker: {
-      symbol: 'circle',
-    },
-    name: 'Sales Predicted',
-    data: [ null, null, null, null, null, null, null, null, null, -0.19, 0.82],
-    dashStyle: 'shortDot'
 
-  }, {
-    color: '#33FFCC',
-    marker: {
-      symbol: 'diamond',
-    },
-    name: 'Facilities',
-    data: [1.58, 2.63, 3.33, 2.35, -2.35, -6.67, 5.26, 5.00, 4.00, -3.68, null]
-   }, {
-   //Facilities predicted
-    color: '#33FFCC',
-    showInLegend: false,
-    marker: {
-      symbol: 'diamond',
-    },
-    name: 'Facilities Predicted',
-    data: [ null, null, null, null, null, null, null, null, null, -3.68, -8.42],
-    dashStyle: 'shortDot'
+        $('#fin').highcharts({
+        
+            title: {
+                text: "Finance", 
+                style: {
+                    color: '#333333',
+                    fontSize: '12px'
+                }
+            },
+        
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                labels: {
+                    x: 0,
+                    y: -5,
+                    style: {
+                        color: '#c0c0c0',
+                        fontSize: 10
+                    }
+                },
+                gridLineWidth: 1,
+                tickLength: 0,
+                plotBands: [{ // visualize prospective
+                    from: 9.5,
+                    to: 10.5,
+                    color: 'rgba(200, 200, 240, .2)'
+                }]
+            },
+            
+            yAxis: {
+                title: {
+                    text: "Budget Overage",
+                    style: {
+                        color: "#6D869F",
+                        fontWeight: 300
+                    }
+                },
+                labels: {
+                    format: '{value} %'
+                },
+                min: -50,
+                max: 50,
+                tickInterval: 25,
+                gridLineColor: "#e0e0e0",
+                gridLineWidth: .5
+            },
+        
+            tooltip: {
+                enabled: false
+            },
+            
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            credits: {
+                enabled: false
+            },
+        
+            series: [{
+                name: 'Budget',
+                data: budget,
+                zIndex: 1,
+                color: Highcharts.getOptions().colors[1],
+                marker: {
+                    fillColor: 'white',
+                    lineWidth: 2,
+                    lineColor: Highcharts.getOptions().colors[1],
+                    radius: 1,
+                    symbol: "diamond"
+                }
+            }, {
+                name: 'Range',
+                data: fin_ranges,
+                type: 'arearange',
+                lineWidth: 0,
+                linkedTo: ':previous',
+                color: Highcharts.getOptions().colors[1],
+                fillOpacity: 0.5,
+                zIndex: 0
+            }]
+        
+        });
 
-  }, {
-    color: '#99CCFF',
-    marker: {
-      symbol: 'square',
-    },
-    name: 'Finance',
-    data: [-4.00, -5.00, -5.00, -10.91, -8.18, -0.91, -8.33, -6.67, -6.67, -5.83, null]
-   }, {
-   //Finance predicted
-    color: '#99CCFF',
-    showInLegend: false,
-    marker: {
-      symbol: 'square',
-    },
-    name: 'Finance Predicted',
-    data: [ null, null, null, null, null, null, null, null, null, -5.83, 10.00],
-    dashStyle: 'shortDot'
 
-  }, {
-    color: '#009933',
-    marker: {
-      symbol: 'triangle',
-    },
-    name: 'Technical Support',
-    data: [-17.14, -20.00, -20.00, -25.00, -27.78, -27.78, -32.43, -32.43, -29.73, -34.21, null]
-   }, {
-   //Tech Support predicted
-    color: '#009933',
-    showInLegend: false,
-    marker: {
-      symbol: 'triangle',
-    },
-    name: 'Tech Support Predicted',
-    data: [ null, null, null, null, null, null, null, null, null, -34.21, -31.58],
-    dashStyle: 'shortDot'
+        $('#hr').highcharts({
+        
+            title: {
+                text: "Human Resources", 
+                style: {
+                    color: '#333333',
+                    fontSize: '12px'
+                }
+            },
+        
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                labels: {
+                    x: 0,
+                    y: -5,
+                    style: {
+                        color: '#c0c0c0',
+                        fontSize: 10
+                    }
+                },
+                gridLineWidth: 1,
+                tickLength: 0,
+                plotBands: [{ // visualize prospective
+                    from: 9.5,
+                    to: 10.5,
+                    color: 'rgba(200, 200, 240, .2)'
+                }]
+            },
 
-  }
-  ]
-};
+            yAxis: {
+                title: {
+                    text: "Budget Overage",
+                    style: {
+                        color: "#6D869F",
+                        fontWeight: 300
+                    }
+                },
+                labels: {
+                    format: '{value} %'
+                },
+                min: -50,
+                max: 50,
+                tickInterval: 25,
+                gridLineColor: "#e0e0e0",
+                gridLineWidth: .5
+            },
+        
+            tooltip: {
+                enabled: false
+            },
+            
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            credits: {
+                enabled: false
+            },
+        
+            series: [{
+                name: 'Budget',
+                data: budget,
+                zIndex: 1,
+                color: Highcharts.getOptions().colors[1],
+                marker: {
+                    fillColor: 'white',
+                    lineWidth: 2,
+                    lineColor: Highcharts.getOptions().colors[1],
+                    radius: 1,
+                    symbol: "diamond"
+                }
+            }, {
+                name: 'Range',
+                data: hr_ranges,
+                type: 'arearange',
+                lineWidth: 0,
+                linkedTo: ':previous',
+                color: Highcharts.getOptions().colors[1],
+                fillOpacity: 0.5,
+                zIndex: 0
+            }]
+        
+        });
 
- // $('#line-chart').highcharts.series.data[10].addClass('projected');
-var chart = new Highcharts.Chart(options);
+
+        $('#mktg').highcharts({
+        
+            title: {
+                text: "Marketing", 
+                style: {
+                    color: '#333333',
+                    fontSize: '12px'
+                }
+            },
+        
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                labels: {
+                    x: 0,
+                    y: -5,
+                    style: {
+                        color: '#c0c0c0',
+                        fontSize: 10
+                    }
+                },
+                gridLineWidth: 1,
+                tickLength: 0,
+                plotBands: [{ // visualize prospective
+                    from: 9.5,
+                    to: 10.5,
+                    color: 'rgba(200, 200, 240, .2)'
+                }]
+            },
+            
+            yAxis: {
+                title: {
+                    text: "Budget Overage",
+                    style: {
+                        color: "#6D869F",
+                        fontWeight: 300
+                    }
+                },
+                labels: {
+                    format: '{value} %'
+                },
+                min: -50,
+                max: 50,
+                tickInterval: 25,
+                gridLineColor: "#e0e0e0",
+                gridLineWidth: .5
+            },
+        
+            tooltip: {
+                enabled: false
+            },
+            
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            credits: {
+                enabled: false
+            },
+        
+            series: [{
+                name: 'Budget',
+                data: budget,
+                zIndex: 1,
+                color: Highcharts.getOptions().colors[1],
+                marker: {
+                    fillColor: 'white',
+                    lineWidth: 2,
+                    lineColor: Highcharts.getOptions().colors[1],
+                    radius: 1,
+                    symbol: "diamond"
+                }
+            }, {
+                name: 'Range',
+                data: mktg_ranges,
+                type: 'arearange',
+                lineWidth: 0,
+                linkedTo: ':previous',
+                color: Highcharts.getOptions().colors[1],
+                fillOpacity: 0.5,
+                zIndex: 0
+            }]
+        
+        });
+
+
+        $('#sales').highcharts({
+        
+            title: {
+                text: "Sales", 
+                style: {
+                    color: '#333333',
+                    fontSize: '12px'
+                }
+            },
+        
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                labels: {
+                    x: 0,
+                    y: -5,
+                    style: {
+                        color: '#c0c0c0',
+                        fontSize: 10
+                    }
+                },
+                gridLineWidth: 1,
+                tickLength: 0,
+                plotBands: [{ // visualize prospective
+                    from: 9.5,
+                    to: 10.5,
+                    color: 'rgba(200, 200, 240, .2)'
+                }]
+            },
+            
+            yAxis: {
+                title: {
+                    text: "Budget Overage",
+                    style: {
+                        color: "#6D869F",
+                        fontWeight: 300
+                    }
+                },
+                labels: {
+                    format: '{value} %'
+                },
+                min: -50,
+                max: 50,
+                tickInterval: 25,
+                gridLineColor: "#e0e0e0",
+                gridLineWidth: .5
+            },
+        
+            tooltip: {
+                enabled: false
+            },
+
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            credits: {
+                enabled: false
+            },
+        
+            series: [{
+                name: 'Budget',
+                data: budget,
+                zIndex: 1,
+                color: Highcharts.getOptions().colors[1],
+                marker: {
+                    fillColor: 'white',
+                    lineWidth: 2,
+                    lineColor: Highcharts.getOptions().colors[1],
+                    radius: 1,
+                    symbol: "diamond"
+                }
+            }, {
+                name: 'Range',
+                data: sales_ranges,
+                type: 'arearange',
+                lineWidth: 0,
+                linkedTo: ':previous',
+                color: Highcharts.getOptions().colors[1],
+                fillOpacity: 0.5,
+                zIndex: 0
+            }]
+        
+        });
+
+
+        $('#ts').highcharts({
+        
+            title: {
+                text: "Technical Support", 
+                style: {
+                    color: '#333333',
+                    fontSize: '12px'
+                }
+            },
+        
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                labels: {
+                    x: 0,
+                    y: -5,
+                    style: {
+                        color: '#c0c0c0',
+                        fontSize: 10
+                    }
+                },
+                gridLineWidth: 1,
+                tickLength: 0,
+                plotBands: [{ // visualize prospective
+                    from: 9.5,
+                    to: 10.5,
+                    color: 'rgba(200, 200, 240, .2)'
+                }]
+            },
+            
+            
+            yAxis: {
+                title: {
+                    text: "Budget Overage",
+                    style: {
+                        color: "#6D869F",
+                        fontWeight: 300
+                    }
+                },
+                labels: {
+                    format: '{value} %'
+                },
+                min: -50,
+                max: 50,
+                tickInterval: 25,
+                gridLineColor: "#e0e0e0",
+                gridLineWidth: .5
+            },
+        
+        
+            tooltip: {
+                enabled: false
+            },
+            
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            credits: {
+                enabled: false
+            },
+        
+            series: [{
+                name: 'Budget',
+                data: budget,
+                zIndex: 1,
+                color: Highcharts.getOptions().colors[1],
+                marker: {
+                    fillColor: 'white',
+                    lineWidth: 2,
+                    lineColor: Highcharts.getOptions().colors[1],
+                    radius: 1,
+                    symbol: "diamond"
+                }
+            }, {
+                name: 'Range',
+                data: ts_ranges,
+                type: 'arearange',
+                lineWidth: 0,
+                linkedTo: ':previous',
+                color: Highcharts.getOptions().colors[1],
+                fillOpacity: 0.5,
+                zIndex: 0
+            }]
+        
+        });
+    
+});
 
 </script>
 
